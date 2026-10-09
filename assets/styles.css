@@ -172,14 +172,16 @@ img { display: block; max-width: 100%; }
 }
 .cta-wa:hover { box-shadow: 0 1px 0 rgba(255,255,255,.28) inset, 0 16px 34px rgba(27,105,47,.40); }
 
+/* Filled, like the WhatsApp control above it, so it reads as a button and
+   not as a card. Club navy rather than green keeps the order of the two
+   obvious: the group chat is still the loudest thing on the page. */
 .cta-ideas {
-  background: var(--paper);
-  border-color: var(--line-2);
-  color: var(--navy);
-  box-shadow: var(--sh-1);
+  background: linear-gradient(165deg, var(--navy-2) 0%, var(--navy) 100%);
+  color: #FFFFFF;
+  box-shadow: 0 1px 0 rgba(255,255,255,.20) inset, 0 12px 26px rgba(20,32,74,.26);
 }
-.cta-ideas .cta-mark { color: var(--navy-2); }
-.cta-ideas:hover { border-color: var(--green); background: #FBFDFB; }
+.cta-ideas .cta-mark { color: #FFFFFF; }
+.cta-ideas:hover { box-shadow: 0 1px 0 rgba(255,255,255,.20) inset, 0 16px 34px rgba(20,32,74,.36); }
 
 
 /* ── 7 · Socials ──────────────────────────────────────────────────────── */
