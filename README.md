@@ -51,7 +51,7 @@ wider screens, so a booth laptop shows the same screen a student holds rather
 than a stretched-out website. Content order:
 
 1. Logo → 2. Title → 3. Supporting line → 4. Join WhatsApp Group →
-5. Apply to Join → 6. Deadline → 7. Socials → 8. Pick a Game → 9. Six games
+5. Submit Your Ideas → 6. Socials → 7. Pick a Game → 8. Six games
 
 ## The six games
 
@@ -89,7 +89,6 @@ the tiles, edit the `GAMES` array near the bottom of the file.
 | Change | Where |
 | --- | --- |
 | Any of the five links | `index.html`, search for the URL |
-| Application deadline | `index.html`, the `.deadline` line |
 | Title / tagline | `index.html`, `.title` and `.lede` |
 | Colours, spacing, type | the token block at the top of `assets/styles.css` |
 | A card illustration | `assets/art.svg.html`, then paste the sprite into `index.html` |

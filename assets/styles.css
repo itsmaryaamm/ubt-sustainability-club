@@ -172,25 +172,15 @@ img { display: block; max-width: 100%; }
 }
 .cta-wa:hover { box-shadow: 0 1px 0 rgba(255,255,255,.28) inset, 0 16px 34px rgba(27,105,47,.40); }
 
-.cta-apply {
+.cta-ideas {
   background: var(--paper);
   border-color: var(--line-2);
   color: var(--navy);
   box-shadow: var(--sh-1);
 }
-.cta-apply .cta-mark { color: var(--navy-2); }
-.cta-apply:hover { border-color: var(--green); background: #FBFDFB; }
+.cta-ideas .cta-mark { color: var(--navy-2); }
+.cta-ideas:hover { border-color: var(--green); background: #FBFDFB; }
 
-.deadline {
-  margin: -2px 0 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  font-size: 13.5px;
-  color: var(--slate);
-}
-.deadline svg { width: 15px; height: 15px; flex: none; color: var(--slate-2); }
 
 /* ── 7 · Socials ──────────────────────────────────────────────────────── */
 .socials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
