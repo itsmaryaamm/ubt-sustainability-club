@@ -1,0 +1,736 @@
+/* ==========================================================================
+   UBT Sustainability Club — landing hub
+   Mobile first: designed at 390px and allowed to breathe upward. The whole
+   page is one phone-width column, so a booth laptop shows the same screen a
+   student holds, not a stretched-out website.
+
+   Palette   paper #FFFFFF · mist #F4F7F6 · line #E6EAF0
+             green #2E9E4B (actions) · deep #1B7A38 · leaf #56B84A (logo)
+             navy #14204A (headings) · slate #6B7690 (secondary)
+   Type      Archivo for everything structural; IBM Plex Mono for the small
+             letterspaced labels (REFLEX, RACE, SPEED …)
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 800;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(fonts/archivo-400-800.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/ibm-plex-mono-500.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/ibm-plex-mono-600.woff2) format('woff2');
+}
+
+:root {
+  --paper:   #FFFFFF;
+  --mist:    #F4F7F6;
+  --mist-2:  #ECF1EE;
+  --line:    #E4E9F0;
+  --line-2:  #D3DAE6;
+
+  --green:   #2E9E4B;
+  --green-d: #1B7A38;
+  --leaf:    #56B84A;
+  --wa:      #2FA84F;
+  --wa-d:    #17692F;
+
+  --navy:    #14204A;
+  --navy-2:  #1E2A5E;
+  --slate:   #6B7690;
+  --slate-2: #939DB4;
+
+  --amber:   #F0A93C;
+  --danger:  #E5484D;
+
+  --r:    16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --pill: 999px;
+
+  --sh-1: 0 1px 2px rgba(20,32,74,.05), 0 6px 18px rgba(20,32,74,.06);
+  --sh-2: 0 2px 6px rgba(20,32,74,.07), 0 14px 34px rgba(20,32,74,.10);
+  --sh-3: 0 30px 80px rgba(20,32,74,.28);
+
+  --display: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --col: 430px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--mist);
+  color: var(--navy);
+  font-family: var(--display);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+body.locked { overflow: hidden; }
+
+img { display: block; max-width: 100%; }
+
+/* A `display` rule in a component must never out-rank the hidden attribute. */
+[hidden] { display: none !important; }
+::selection { background: rgba(86,184,74,.28); }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 10px; }
+
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* One phone-width column, centred and given a card edge on wider screens. */
+.phone {
+  width: 100%;
+  max-width: var(--col);
+  margin-inline: auto;
+  min-height: 100dvh;
+  background: var(--paper);
+  padding: 20px 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+@media (min-width: 520px) {
+  body { padding-block: 28px; }
+  .phone {
+    min-height: 0;
+    border-radius: var(--r-xl);
+    box-shadow: var(--sh-2);
+    padding: 26px 26px 32px;
+  }
+}
+
+/* ── 1 · Logo ─────────────────────────────────────────────────────────── */
+.mast { display: flex; justify-content: flex-start; min-height: 40px; }
+/* The supplied logo file is a square canvas with wide blank margins around
+   the mark (artwork 704x332 inside 1100x1042). The box below shows only the
+   artwork region — the file and the mark itself are untouched, we just stop
+   rendering the empty canvas around it. */
+.logo-box { display: block; overflow: hidden; aspect-ratio: 1100 / 380; flex: none; }
+.logo-box img { width: 100%; height: 100%; object-fit: cover; }
+.logo-mast { width: 124px; }
+.logo-screen { margin-left: auto; width: 104px; }
+.mast-fallback { display: grid; justify-items: start; line-height: 1.02; }
+.mast-fallback b { font-size: 25px; font-weight: 800; letter-spacing: -.02em; color: var(--navy-2); }
+.mast-fallback i { font-style: normal; font-size: 11px; font-weight: 700; color: var(--navy-2); }
+
+/* ── 2·3 · Title and supporting line ──────────────────────────────────── */
+.title {
+  margin: 6px 0 6px;
+  font-size: clamp(34px, 10.5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -.035em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.title-a { color: var(--green); }
+.title-b { color: var(--navy); }
+.lede { margin: 0; font-size: 16.5px; color: var(--slate); line-height: 1.45; }
+
+/* ── 4·5 · Calls to action — flat fills, one weight of shadow ─────────── */
+.cta {
+  display: grid;
+  grid-template-columns: 32px 1fr 20px;
+  align-items: center;
+  gap: 14px;
+  min-height: 58px;
+  padding: 0 20px 0 18px;
+  border-radius: var(--pill);
+  text-decoration: none;
+  color: #FFFFFF;
+  transition: transform .18s cubic-bezier(.2,.8,.2,1), background-color .18s ease, box-shadow .18s ease;
+}
+.cta:active { transform: scale(.985); }
+.cta b { font-size: 16.5px; font-weight: 650; letter-spacing: -.01em; }
+.cta-mark { display: grid; place-items: center; }
+.cta-mark svg, .cta-mark img { width: 26px; height: 26px; object-fit: contain; }
+.cta-go { display: grid; place-items: center; opacity: .7; transition: transform .18s ease, opacity .18s ease; }
+.cta-go svg { width: 18px; height: 18px; }
+.cta:hover .cta-go { transform: translateX(3px); opacity: 1; }
+
+.cta-wa { background: #23944A; box-shadow: 0 8px 20px -8px rgba(23,105,47,.55); }
+.cta-wa:hover { background: #1E8641; }
+.cta-ideas { background: var(--navy); box-shadow: 0 8px 20px -8px rgba(20,32,74,.5); }
+.cta-ideas:hover { background: #0F1A3D; }
+
+/* ── Campaign · Breast Cancer Awareness ──────────────────────────────── */
+.aware {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  margin-top: 2px;
+  padding: 22px 30px 26px;
+  border-radius: 24px;
+  background: #FCF2F4;
+  border: 1px solid #F5DDE3;
+  display: grid;
+  gap: 18px;
+}
+.pink-art { position: absolute; z-index: -1; pointer-events: none; mix-blend-mode: multiply; opacity: .9; }
+.pink-art-l { left: -26px; bottom: -10px; height: 88%; }
+.pink-art-r { right: -36px; top: -8px; height: 96%; }
+.aware-head { display: grid; justify-items: center; text-align: center; gap: 2px; }
+.aware-eyebrow {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase; color: #A33A5E;
+  margin-bottom: 6px;
+}
+.aware-head h2 { margin: 0; font-size: 23px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; color: #9E2A52; text-wrap: balance; }
+.aware-ar { margin: 2px 0 0; font-size: 17px; font-weight: 600; color: #B8456C; line-height: 1.4; }
+
+.pink-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pink-box {
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.92);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border: 1px solid #F3D6DE;
+  color: #3A1424;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(158,42,82,.06), 0 10px 24px -12px rgba(158,42,82,.35);
+  transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease, border-color .18s ease;
+}
+.pink-box:hover { transform: translateY(-2px); border-color: #EBB8C7; box-shadow: 0 1px 2px rgba(158,42,82,.08), 0 16px 30px -12px rgba(158,42,82,.45); }
+.pink-box:active { transform: scale(.985); }
+.pink-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.pink-mark { width: 40px; height: 40px; border-radius: 12px; background: #D9487A; color: #FFFFFF; display: grid; place-items: center; }
+.pink-mark svg { width: 22px; height: 22px; }
+.pink-go { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: #B8456C; background: #FBE7EC; transition: transform .18s ease; }
+.pink-go svg { width: 14px; height: 14px; }
+.pink-box:hover .pink-go { transform: translate(2px,-2px); }
+.pink-text { display: grid; gap: 3px; }
+.pink-box b { font-size: 15.5px; font-weight: 700; letter-spacing: -.02em; line-height: 1.15; color: #3A1424; }
+.pink-box small { font-size: 12px; font-weight: 500; line-height: 1.3; color: #8A4A62; }
+
+/* ── 7 · Socials ──────────────────────────────────────────────────────── */
+.socials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
+.soc {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 14px 4px 12px;
+  border-radius: var(--r);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  transition: transform .15s cubic-bezier(.2,.8,.2,1), border-color .15s ease, background-color .15s ease;
+}
+.soc b { font-size: 12.5px; font-weight: 600; color: var(--navy); letter-spacing: -.005em; }
+/* Each supplied icon already carries its own brand tile, so it is shown
+   whole rather than sitting on a colour we invent for it. */
+.soc-mark { width: 34px; height: 34px; display: block; }
+.soc-mark img { width: 100%; height: 100%; object-fit: contain; }
+.soc:hover { transform: translateY(-2px); border-color: var(--line-2); }
+
+/* ── 8 · Pick a Game ────────────────────────────────────────────────────── */
+.play { display: grid; gap: 14px; margin-top: 4px; }
+.play-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.play-head h2 { margin: 0; font-size: 25px; font-weight: 800; letter-spacing: -.03em; color: var(--navy); }
+.play-head p { margin: 2px 0 0; font-size: 14.5px; color: var(--slate); }
+.play-badge {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  color: var(--slate-2);
+}
+.play-badge svg { width: 22px; height: 22px; flex: none; color: var(--navy-2); }
+.play-badge span {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  text-align: right;
+}
+@media (max-width: 359px) { .play-badge span { display: none; } }
+
+/* ── 9 · The six game cards ─────────────────────────────────────────────── */
+.games { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+.gcard {
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--paper);
+  box-shadow: var(--sh-1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .16s cubic-bezier(.2,.8,.2,1), box-shadow .16s ease, border-color .16s ease;
+}
+.gcard:hover { transform: translateY(-3px); box-shadow: var(--sh-2); border-color: var(--line-2); }
+.gcard:active { transform: translateY(-1px) scale(.99); }
+
+.gcard-art { display: block; line-height: 0; }
+.gcard-art svg { width: 100%; height: auto; aspect-ratio: 160 / 100; display: block; }
+
+.gcard-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 11px 11px;
+}
+.gcard-text { min-width: 0; display: grid; gap: 3px; }
+.gcard-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -.018em;
+  line-height: 1.15;
+  color: var(--navy);
+}
+.gcard-kind {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--slate-2);
+}
+.gcard-go { width: 18px; height: 18px; flex: none; margin-left: auto; color: var(--slate-2); }
+.gcard:hover .gcard-go { color: var(--green); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ==========================================================================
+   Game screen — a full sheet, not a dialog box, so a phone gets the whole
+   screen and a laptop gets the same sheet centred.
+   ========================================================================== */
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(20, 32, 74, .5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.screen[hidden] { display: none; }
+@media (min-width: 520px) { .screen { padding: 22px; } }
+
+.screen-inner {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  height: 100dvh;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: rise .2s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes rise { from { transform: translateY(12px); opacity: 0; } }
+@media (min-width: 520px) {
+  .screen-inner { height: min(860px, calc(100dvh - 44px)); border-radius: var(--r-xl); box-shadow: var(--sh-3); }
+}
+
+.screen-top {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.back {
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px 8px 8px;
+  border: none;
+  background: transparent;
+  border-radius: var(--pill);
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.back svg { width: 19px; height: 19px; }
+.back:hover { background: var(--mist); }
+
+
+.screen-body { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+
+/* ── The artwork block ──────────────────────────────────────────────────
+   The SVG illustration is the floor; a real photo at assets/games/<id>.jpg
+   sits on top of it when one exists. */
+.art { position: relative; display: block; line-height: 0; width: 100%; }
+.art > svg,
+.art > .art-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 160 / 100;
+  object-fit: cover;
+}
+.art > .art-photo { position: absolute; inset: 0; }
+
+/* ── Playfield and HUD ──────────────────────────────────────────────────── */
+.stage-hud {
+  flex: none;
+  min-height: 44px;
+  padding: 9px 16px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+  background: var(--mist);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate);
+}
+.stage-hud:empty { display: none; }
+.stage-field {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  background: var(--mist);
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.game-canvas { position: absolute; inset: 0; display: block; touch-action: none; }
+
+.hud-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 11px;
+  border-radius: var(--pill);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 12px; font-weight: 600;
+  white-space: nowrap;
+  color: var(--navy);
+}
+.hud-bar { flex: 1 1 110px; min-width: 80px; height: 8px; border-radius: var(--pill); background: var(--line); overflow: hidden; }
+.hud-bar > i { display: block; height: 100%; width: 100%; background: var(--green); border-radius: var(--pill); }
+.hud-bar.warn > i { background: var(--amber); }
+.hud-bar.danger > i { background: var(--danger); }
+
+/* ── The sheet that covers the field (start screen / result screen) ─────── */
+.curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: var(--paper);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.curtain[hidden] { display: none; }
+.curtain-inner { min-height: 100%; display: flex; flex-direction: column; }
+
+/* ── Start screen ───────────────────────────────────────────────────────── */
+.sheet-intro { padding: 16px 16px 22px; gap: 14px; }
+.sheet-intro .hero {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--sh-1);
+  border: 1px solid var(--line);
+}
+.sheet-title {
+  margin: 2px 0 0;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  color: var(--navy);
+}
+.sheet-line { margin: -8px 0 0; text-align: center; font-size: 15px; color: var(--slate); }
+
+.btn-wide { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 9px; }
+.btn-wide svg { width: 19px; height: 19px; }
+
+.chips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.chip {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  padding: 13px 8px;
+  border-radius: var(--r);
+  background: var(--mist);
+  border: 1px solid var(--line);
+  text-align: center;
+}
+.chip svg { width: 19px; height: 19px; color: var(--navy-2); margin-bottom: 2px; }
+.chip b { font-size: 13.5px; font-weight: 700; color: var(--navy); line-height: 1.2; }
+.chip i {
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--slate-2);
+}
+
+.others { margin-top: auto; padding-top: 8px; }
+.others-head {
+  margin: 0 0 9px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--slate-2);
+}
+.others-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; }
+.omini {
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--paper);
+  overflow: hidden;
+  display: grid;
+  transition: transform .14s ease, border-color .14s ease;
+}
+.omini .art > svg, .omini .art > .art-photo { aspect-ratio: 1 / 1; }
+.omini span {
+  padding: 5px 3px 6px;
+  font-size: 8.5px;
+  font-weight: 600;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--navy);
+}
+.omini:hover { transform: translateY(-2px); border-color: var(--green); }
+
+/* ── Result screen ──────────────────────────────────────────────────────── */
+.sheet-result { position: relative; justify-content: flex-start; background: var(--mist); }
+.win-art { position: relative; flex: 0 0 auto; width: 100%; aspect-ratio: 4 / 3; }
+.win-art .art, .win-art .art > svg, .win-art .art > .art-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto;
+}
+.win-art::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(20,32,74,.30) 0%, rgba(20,32,74,.06) 42%, rgba(20,32,74,.34) 100%);
+}
+.ribbon {
+  position: absolute;
+  left: 50%;
+  top: 26px;
+  transform: translateX(-50%) rotate(-2.2deg);
+  z-index: 2;
+  padding: 11px 22px;
+  background: var(--paper);
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(20,32,74,.25);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--green-d);
+  white-space: nowrap;
+}
+.is-lose .ribbon { color: var(--navy); }
+
+.win-card {
+  position: relative;
+  z-index: 2;
+  margin: -34px 16px 0;
+  padding: 20px 18px 18px;
+  background: var(--paper);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-2);
+  display: grid;
+  gap: 10px;
+  text-align: center;
+}
+.win-card h3 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -.025em; color: var(--navy); }
+.is-win .win-card h3 { color: var(--green-d); }
+.win-card p { margin: -4px 0 6px; font-size: 14.5px; color: var(--slate); }
+
+.win-sign {
+  margin: 16px 0 24px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--slate-2);
+}
+
+/* Confetti-free by design: the ribbon and the photo carry the moment. */
+.btn {
+  font: inherit; font-weight: 700; font-size: 15px;
+  cursor: pointer;
+  padding: 14px 22px;
+  min-height: 52px;
+  border-radius: var(--pill);
+  border: 1.5px solid transparent;
+  transition: transform .14s ease, background-color .14s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-go { background: var(--green); color: #fff; box-shadow: 0 10px 24px rgba(46,158,75,.28); }
+.btn-go:hover { background: var(--green-d); }
+.btn-quiet { background: var(--paper); color: var(--navy); border-color: var(--line-2); }
+.btn-quiet:hover { background: var(--mist); }
+/* ── DOM-based games ────────────────────────────────────────────────────── */
+.dom-game {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  gap: 14px; padding: 18px;
+  overflow: auto;
+  background: var(--paper);
+}
+
+/* Bin It */
+.bin-item { flex: 1 1 auto; display: grid; place-content: center; justify-items: center; gap: 6px; }
+.bin-emoji { font-size: clamp(46px, 13vw, 70px); line-height: 1; }
+.bin-name { font-size: clamp(17px, 3.6vw, 21px); font-weight: 700; letter-spacing: -.02em; color: var(--navy); }
+.bin-flash { min-height: 22px; text-align: center; font-size: 14.5px; font-weight: 700; }
+.bin-flash.ok { color: var(--green-d); }
+.bin-flash.no { color: #C6343A; }
+.bin-row { flex: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+.bin-btn {
+  font: inherit; cursor: pointer;
+  display: grid; justify-items: center; align-content: center; gap: 7px;
+  min-height: 100px; padding: 14px 6px;
+  border-radius: 15px;
+  border: 1.5px solid var(--line-2);
+  background: var(--paper);
+  color: var(--navy);
+  box-shadow: var(--sh-1);
+  transition: transform .12s ease, border-color .12s ease, background-color .12s ease;
+}
+.bin-btn i { font-style: normal; font-size: 26px; line-height: 1; }
+.bin-btn b { font-size: 13px; font-weight: 600; text-align: center; line-height: 1.22; }
+.bin-btn:hover:not(:disabled) { border-color: var(--green); }
+.bin-btn:active { transform: translateY(1px); }
+.bin-btn.correct { background: #E8F7EA; border-color: var(--green); }
+.bin-btn.wrong { background: #FDECEC; border-color: var(--danger); }
+
+/* Don't Cook the Planet */
+.cook-wrap { align-items: center; justify-content: center; text-align: center; }
+.cook-earth { font-size: clamp(60px, 17vw, 92px); line-height: 1; transition: transform .08s ease, filter .2s linear; }
+.cook-temp {
+  font-family: var(--mono);
+  font-size: clamp(16px, 4.2vw, 21px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy);
+}
+.cook-scale { position: relative; width: min(400px, 100%); height: 14px; border-radius: var(--pill); background: var(--line); overflow: hidden; }
+.cook-scale > i { position: absolute; inset: 0 auto 0 0; border-radius: var(--pill); background: linear-gradient(90deg, var(--green), var(--amber) 55%, var(--danger)); }
+.cook-scale > b { position: absolute; top: -4px; bottom: -4px; width: 3px; border-radius: 2px; background: var(--navy); }
+.cook-btn {
+  font: inherit; font-weight: 800;
+  font-size: clamp(17px, 4.4vw, 22px);
+  cursor: pointer;
+  width: min(330px, 100%);
+  min-height: 72px;
+  padding: 20px 36px;
+  border: none;
+  border-radius: var(--pill);
+  color: #fff;
+  background: var(--green);
+  box-shadow: 0 12px 28px rgba(46,158,75,.32);
+  touch-action: manipulation;
+  transition: transform .06s ease, background-color .06s ease;
+}
+.cook-btn:active, .cook-btn.hit { transform: scale(.955); background: var(--green-d); }
+
+/* Power UBT */
+.power-head { flex: none; }
+.power-meter { position: relative; height: 20px; border-radius: var(--pill); background: var(--line); overflow: hidden; }
+.power-meter > i {
+  position: absolute; inset: 0 auto 0 0; width: 0%;
+  border-radius: var(--pill);
+  background: linear-gradient(90deg, var(--green-d), var(--leaf));
+  transition: width .5s cubic-bezier(.2,.8,.2,1);
+}
+.power-meter > b { position: absolute; top: -5px; bottom: -5px; width: 3px; border-radius: 2px; background: var(--navy); }
+.power-nums {
+  display: flex; justify-content: space-between;
+  margin-top: 7px;
+  font-family: var(--mono);
+  font-size: 10.5px; font-weight: 500;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--slate-2);
+}
+.power-nums strong { color: var(--navy); font-size: 14px; font-variant-numeric: tabular-nums; }
+.power-grid { flex: 1 1 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; align-content: center; }
+@media (max-width: 520px) { .power-grid { grid-template-columns: repeat(2, 1fr); } }
+.power-btn {
+  font: inherit; cursor: pointer;
+  display: grid; justify-items: center; align-content: center; gap: 6px;
+  min-height: 112px; padding: 14px 8px;
+  border-radius: 15px;
+  border: 1.5px solid var(--line-2);
+  background: var(--paper);
+  color: var(--navy);
+  box-shadow: var(--sh-1);
+  transition: transform .12s ease, border-color .12s ease, opacity .2s ease;
+}
+.power-btn i { font-style: normal; font-size: 26px; line-height: 1; }
+.power-btn b { font-size: 12.5px; font-weight: 600; text-align: center; line-height: 1.25; }
+.power-dots { display: flex; gap: 3px; }
+.power-dots s { width: 6px; height: 6px; border-radius: 50%; background: var(--leaf); text-decoration: none; }
+.power-dots s.off { background: var(--line-2); }
+.power-btn:hover:not(:disabled) { border-color: var(--green); transform: translateY(-2px); }
+.power-btn:disabled { opacity: .38; cursor: default; }
+.power-btn.picked { opacity: 1; border-color: var(--green); background: #E8F7EA; }
+
+/* Reserve two lines for the longest game name so every tile ends level. */
+.gcard-name { min-height: 2.3em; }
+
+/* The supplied TikTok icon has the word "TikTok" set inside it, so the tile
+   read "TikTok" twice — once in the art, once in the label under it, unlike
+   the clean Instagram and LinkedIn marks. Show only the note glyph (the
+   wordmark sits below y=190 of 256) on the icon's own black tile. */
+.soc[data-net="tt"] .soc-mark {
+  overflow: hidden;
+  border-radius: 11px;
+  background: #0F0F14;
+}
+.soc[data-net="tt"] .soc-mark img {
+  width: 55.6px;
+  height: 55.6px;
+  max-width: none;
+  margin: -1.3px 0 0 -7.8px;
+}
